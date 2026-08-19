@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NutriScan - Supplement & Energy Drink Scanner</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <h1>NutriScan</h1>
+      </div>
+      <p class="tagline">Purity & Efficacy Rating Engine</p>
+    </header>
+
+    <main>
+      <!-- Search & Scan Panel -->
+      <section class="card search-card">
+        <h2>Scan or Enter Barcode</h2>
+        <form id="search-form">
+          <div class="input-group">
+            <input type="text" id="barcode-input" placeholder="e.g. 0850004202021" required>
+            <button type="submit" id="search-btn">Analyze</button>
+          </div>
+        </form>
+        <div class="demo-barcodes">
+          <p>Quick Demo Scans:</p>
+          <div class="chip-group">
+            <button class="chip" data-upc="0850004202021">Celsius Energy</button>
+            <button class="chip" data-upc="5060337502254">Grenade Protein Bar</button>
+            <button class="chip" data-upc="0074817060207">Optimum Gold Whey</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Status Messages -->
+      <div id="loader" class="loader hidden">
+        <div class="spinner"></div>
+        <p>Fetching Open Food Facts Data & Calculating Score...</p>
+      </div>
+      <div id="error-message" class="error-banner hidden"></div>
+
+      <!-- Rating Results Dashboard -->
+      <div id="results-dashboard" class="hidden">
+        <!-- Score Overview Card -->
+        <section class="card score-card">
+          <div class="product-meta">
+            <img id="product-img" src="" alt="Product Image" class="product-thumb">
+            <div>
+              <h2 id="product-title">Product Name</h2>
+              <p id="product-brand" class="brand-name">Brand Name</p>
+            </div>
+          </div>
+
+          <div class="score-display">
+            <div id="score-badge" class="score-circle">
+              <span id="score-value">0</span>
+              <span class="score-max">/100</span>
+            </div>
+            <div class="score-verdict">
+              <h3 id="verdict-label">Assessment</h3>
+              <p id="verdict-desc">Analyzing ingredient efficacy and purity...</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Category Breakdown Grid -->
+        <section class="card">
+          <h3>Score Breakdown</h3>
+          <div class="metrics-grid">
+            <div class="metric-item">
+              <span class="metric-label">Clinical Dosage</span>
+              <div class="progress-bar"><div id="bar-dosage" class="fill"></div></div>
+              <span id="val-dosage" class="metric-val">0%</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Ingredient Purity</span>
+              <div class="progress-bar"><div id="bar-purity" class="fill"></div></div>
+              <span id="val-purity" class="metric-val">0%</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Label Transparency</span>
+              <div class="progress-bar"><div id="bar-transparency" class="fill"></div></div>
+              <span id="val-transparency" class="metric-val">0%</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Detailed Key Findings -->
+        <section class="card">
+          <h3>Ingredient Analysis & Flags</h3>
+          <ul id="findings-list" class="findings-list"></ul>
+        </section>
+
+        <!-- Cleaner Alternative Recommendation -->
+        <section id="alt-card" class="card alt-card hidden">
+          <div class="alt-header">
+            <span>✨ Cleaner Alternative</span>
+          </div>
+          <div class="alt-body">
+            <h4 id="alt-title">Alternative Product</h4>
+            <p id="alt-desc">Higher protein purity per serving with zero artificial sweeteners.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
