@@ -1,177 +1,2220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NutriScan - Supplement & Beverage Scanner</title>
-  <!-- HTML5-QRCode Barcode Library CDN -->
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>NutriScan — Know What's Really in Your Supplement</title>
+
+  <meta
+    name="description"
+    content="NutriScan deciphers supplement labels to reveal clinical dosing, ingredient quality, transparency, and form."
+  />
+
+  <style>
+    /* =========================================================
+       NUTRISCAN — COMPLETE LANDING PAGE
+       Everything is contained in this single HTML file.
+       ========================================================= */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+      color: #0b1830;
+      background: #ffffff;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+
+      height: 78px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 5vw;
+
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+
+      border-bottom: 1px solid #edf1f6;
+
+      transition:
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+    }
+
+    .site-header.scrolled {
+      box-shadow: 0 8px 30px rgba(11, 24, 48, 0.08);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      font-size: 20px;
+      font-weight: 850;
+      letter-spacing: -0.05em;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 9px;
+
+      background: #ffd83d;
+      color: #07152c;
+
+      font-size: 17px;
+    }
+
+    .site-header nav {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+
+      font-size: 14px;
+      font-weight: 650;
+
+      color: #536178;
+    }
+
+    .site-header nav a {
+      transition: color 0.2s ease;
+    }
+
+    .site-header nav a:hover {
+      color: #0b1830;
+    }
+
+    .nav-cta {
+      padding: 12px 18px;
+
+      border-radius: 999px;
+
+      background: #0b1830;
+      color: #ffffff;
+
+      font-size: 13px;
+      font-weight: 750;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(11, 24, 48, 0.18);
+    }
+
+    /* =========================================================
+       GENERAL
+       ========================================================= */
+
+    section {
+      scroll-margin-top: 90px;
+    }
+
+    .eyebrow {
+      margin-bottom: 18px;
+
+      font-size: 11px;
+      font-weight: 850;
+
+      letter-spacing: 0.16em;
+
+      color: #6d7b91;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      padding: 15px 22px;
+
+      border-radius: 999px;
+
+      font-size: 14px;
+      font-weight: 800;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(11, 24, 48, 0.16);
+    }
+
+    .button-dark {
+      background: #0b1830;
+      color: #ffffff;
+    }
+
+    .button-yellow {
+      background: #ffd83d;
+      color: #0b1830;
+    }
+
+    .text-link {
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .text-link:hover {
+      text-decoration: underline;
+    }
+
+    /* =========================================================
+       HERO
+       ========================================================= */
+
+    .hero {
+      min-height: calc(100vh - 78px);
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+
+      gap: 5vw;
+
+      padding: 7vw 9vw 8vw;
+
+      background:
+        radial-gradient(
+          circle at 78% 48%,
+          #edf9ff 0,
+          rgba(237, 249, 255, 0.7) 18%,
+          transparent 34%
+        ),
+        #ffffff;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 5;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+
+      margin-bottom: 28px;
+
+      font-size: clamp(48px, 6.3vw, 90px);
+      line-height: 0.95;
+
+      letter-spacing: -0.075em;
+    }
+
+    .hero-text {
+      max-width: 600px;
+
+      color: #617087;
+
+      font-size: 19px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+
+      margin-top: 34px;
+    }
+
+    /* =========================================================
+       HERO PHONE
+       ========================================================= */
+
+    .hero-visual {
+      position: relative;
+
+      height: 620px;
+
+      display: grid;
+      place-items: center;
+    }
+
+    .orbit {
+      position: absolute;
+
+      left: 50%;
+      top: 50%;
+
+      transform: translate(-50%, -50%);
+
+      border: 1px solid #dceaf3;
+      border-radius: 50%;
+    }
+
+    .orbit-one {
+      width: 590px;
+      height: 590px;
+    }
+
+    .orbit-two {
+      width: 450px;
+      height: 450px;
+
+      border-style: dashed;
+
+      animation: rotateOrbit 30s linear infinite;
+    }
+
+    @keyframes rotateOrbit {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    .phone {
+      position: relative;
+      z-index: 3;
+
+      width: 305px;
+      height: 600px;
+
+      border: 10px solid #0b1830;
+      border-radius: 42px;
+
+      background: #0b1830;
+
+      box-shadow:
+        0 40px 80px rgba(12, 31, 61, 0.25),
+        0 8px 20px rgba(12, 31, 61, 0.12);
+
+      transform: rotate(4deg);
+
+      transition: transform 0.15s linear;
+    }
+
+    .phone-notch {
+      position: absolute;
+
+      top: 0;
+      left: 50%;
+
+      width: 105px;
+      height: 24px;
+
+      transform: translateX(-50%);
+
+      background: #0b1830;
+
+      border-radius: 0 0 16px 16px;
+
+      z-index: 5;
+    }
+
+    .phone-screen {
+      height: 100%;
+
+      padding: 54px 22px 20px;
+
+      border-radius: 32px;
+
+      background: #f6faff;
+
+      overflow: hidden;
+    }
+
+    .scan-top {
+      display: flex;
+      justify-content: space-between;
+
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .product-label {
+      margin-top: 45px;
+
+      padding: 24px;
+
+      background: #ffffff;
+
+      border-radius: 20px;
+
+      box-shadow: 0 10px 30px rgba(31, 65, 104, 0.08);
+    }
+
+    .product-type {
+      font-size: 8px;
+      font-weight: 800;
+
+      letter-spacing: 0.14em;
+
+      color: #718097;
+    }
+
+    .product-label h3 {
+      margin: 9px 0;
+
+      font-size: 27px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .product-label p {
+      margin: 0;
+
+      color: #6b7890;
+
+      font-size: 12px;
+    }
+
+    .score-circle {
+      width: 128px;
+      height: 128px;
+
+      margin: 22px auto 18px;
+
+      display: flex;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
+
+      border: 8px solid #ffd83d;
+      border-radius: 50%;
+    }
+
+    .score-circle strong {
+      font-size: 39px;
+      line-height: 1;
+
+      letter-spacing: -0.06em;
+    }
+
+    .score-circle small {
+      align-self: center;
+
+      margin-top: 7px;
+
+      font-size: 10px;
+    }
+
+    .score-circle span {
+      width: 100%;
+
+      margin-top: 3px;
+
+      text-align: center;
+
+      font-size: 10px;
+      font-weight: 800;
+
+      color: #617087;
+    }
+
+    .mini-results {
+      display: grid;
+      gap: 9px;
+    }
+
+    .mini-results div {
+      display: flex;
+      justify-content: space-between;
+
+      padding: 10px 12px;
+
+      border-radius: 10px;
+
+      background: #ffffff;
+
+      font-size: 10px;
+    }
+
+    .mini-results b {
+      color: #0b1830;
+    }
+
+    /* =========================================================
+       FLOATING CARDS
+       ========================================================= */
+
+    .floating-card {
+      position: absolute;
+      z-index: 5;
+
+      display: flex;
+      align-items: center;
+      gap: 11px;
+
+      padding: 14px 16px;
+
+      border-radius: 16px;
+
+      background: #ffffff;
+
+      box-shadow: 0 20px 45px rgba(25, 48, 83, 0.15);
+
+      font-size: 11px;
+
+      animation: floating 4s ease-in-out infinite;
+    }
+
+    .floating-card small {
+      display: block;
+
+      margin-top: 3px;
+
+      color: #8290a4;
+    }
+
+    .floating-card-left {
+      left: 2%;
+      top: 33%;
+    }
+
+    .floating-card-right {
+      right: 0;
+      bottom: 27%;
+
+      animation-delay: 1s;
+    }
+
+    .check,
+    .shield {
+      width: 30px;
+      height: 30px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 9px;
+
+      background: #e8f8ec;
+
+      font-weight: 900;
+    }
+
+    .shield {
+      background: #eaf5ff;
+    }
+
+    @keyframes floating {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* =========================================================
+       INTRO / FOUR ANSWERS
+       ========================================================= */
+
+    .section-light {
+      padding: 115px 9vw;
+
+      background: #f7faff;
+    }
+
+    .section-heading {
+      max-width: 760px;
+    }
+
+    .section-heading h2,
+    .score-copy h2,
+    .science h2,
+    .independence h2,
+    .final-cta h2 {
+      margin: 0;
+
+      font-size: clamp(38px, 5vw, 66px);
+      line-height: 0.98;
+
+      letter-spacing: -0.065em;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+
+      gap: 18px;
+
+      margin-top: 55px;
+    }
+
+    .feature-card {
+      position: relative;
+
+      min-height: 300px;
+
+      padding: 27px;
+
+      background: #ffffff;
+
+      border: 1px solid #e7edf4;
+      border-radius: 24px;
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-7px);
+
+      box-shadow: 0 25px 55px rgba(23, 50, 85, 0.1);
+    }
+
+    .feature-number {
+      font-size: 11px;
+      font-weight: 850;
+
+      color: #9aa6b7;
+    }
+
+    .feature-icon {
+      margin: 45px 0 28px;
+
+      font-size: 26px;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 10px;
+
+      font-size: 21px;
+
+      letter-spacing: -0.03em;
+    }
+
+    .feature-card p {
+      color: #68778d;
+
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       SCORE SECTION
+       ========================================================= */
+
+    .score-section {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+
+      gap: 8vw;
+
+      align-items: center;
+
+      padding: 125px 9vw;
+
+      background: #0b1830;
+
+      color: #ffffff;
+    }
+
+    .score-copy p:not(.eyebrow) {
+      max-width: 520px;
+
+      margin: 25px 0 32px;
+
+      color: #aebbd0;
+
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .score-panel {
+      padding: 45px;
+
+      background: #12233f;
+
+      border: 1px solid #243753;
+      border-radius: 30px;
+    }
+
+    .big-score {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+
+      padding-bottom: 32px;
+
+      border-bottom: 1px solid #2a3b55;
+    }
+
+    .big-score span {
+      font-size: 110px;
+      line-height: 0.8;
+
+      letter-spacing: -0.09em;
+    }
+
+    .big-score small {
+      color: #7e8da4;
+
+      font-size: 20px;
+    }
+
+    .big-score b {
+      margin-left: auto;
+
+      padding: 8px 13px;
+
+      border-radius: 999px;
+
+      background: #dff6e5;
+      color: #1c7141;
+
+      font-size: 12px;
+    }
+
+    .score-bars {
+      display: grid;
+      gap: 24px;
+
+      padding-top: 30px;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 35px;
+
+      gap: 15px;
+
+      align-items: center;
+
+      font-size: 12px;
+
+      color: #b7c2d2;
+    }
+
+    .score-row > div {
+      height: 8px;
+
+      overflow: hidden;
+
+      border-radius: 10px;
+
+      background: #253954;
+    }
+
+    .score-row i {
+      display: block;
+
+      width: 0;
+      height: 100%;
+
+      border-radius: 10px;
+
+      background: #ffd83d;
+
+      transition: width 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    .score-row b {
+      color: #ffffff;
+
+      text-align: right;
+    }
+
+    /* =========================================================
+       COMPARISON
+       ========================================================= */
+
+    .comparison {
+      padding-top: 120px;
+      padding-bottom: 130px;
+    }
+
+    .centered {
+      margin: auto;
+
+      text-align: center;
+    }
+
+    .comparison .section-heading h2 {
+      max-width: 850px;
+
+      margin: auto;
+    }
+
+    .comparison-cards {
+      max-width: 900px;
+
+      display: grid;
+      grid-template-columns: 1fr 70px 1fr;
+
+      align-items: center;
+
+      margin: 60px auto 0;
+    }
+
+    .product-card {
+      padding: 30px;
+
+      background: #ffffff;
+
+      border: 1px solid #e3e9f1;
+      border-radius: 26px;
+    }
+
+    .product-card.recommended {
+      border: 2px solid #ffd83d;
+
+      box-shadow: 0 20px 50px rgba(22, 49, 84, 0.08);
+    }
+
+    .pill {
+      font-size: 9px;
+      font-weight: 850;
+
+      letter-spacing: 0.12em;
+
+      color: #718096;
+    }
+
+    .product-card h3 {
+      margin: 18px 0;
+
+      font-size: 23px;
+    }
+
+    .product-score {
+      font-size: 72px;
+      font-weight: 850;
+
+      letter-spacing: -0.08em;
+    }
+
+    .score-mid {
+      color: #718096;
+    }
+
+    .product-card p {
+      color: #718096;
+
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .product-card ul {
+      display: grid;
+      gap: 11px;
+
+      margin-top: 25px;
+
+      padding: 0;
+
+      list-style: none;
+
+      color: #526177;
+
+      font-size: 12px;
+    }
+
+    .vs {
+      text-align: center;
+
+      font-size: 12px;
+      font-weight: 900;
+
+      color: #a2adbd;
+    }
+
+    /* =========================================================
+       SCIENCE
+       ========================================================= */
+
+    .science {
+      padding: 125px 9vw;
+
+      background: #eaf8ff;
+    }
+
+    .science-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      gap: 10vw;
+
+      align-items: center;
+    }
+
+    .science-copy > p:not(.eyebrow) {
+      max-width: 560px;
+
+      color: #5f7289;
+
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .science-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      gap: 14px;
+    }
+
+    .science-item {
+      min-height: 130px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      padding: 27px;
+
+      background: #ffffff;
+
+      border-radius: 20px;
+    }
+
+    .science-item strong {
+      font-size: 11px;
+
+      color: #9aa8ba;
+    }
+
+    .science-item span {
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    /* =========================================================
+       INDEPENDENCE
+       ========================================================= */
+
+    .independence {
+      padding: 115px 9vw;
+    }
+
+    .independence-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      gap: 8vw;
+
+      align-items: end;
+
+      padding: 60px 7vw;
+
+      background: #ffd83d;
+
+      border-radius: 34px;
+    }
+
+    .independence-card > p {
+      margin: 0;
+
+      color: #35445c;
+
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    /* =========================================================
+       FINAL CTA
+       ========================================================= */
+
+    .final-cta {
+      padding: 150px 9vw;
+
+      text-align: center;
+
+      background: #ffffff;
+    }
+
+    .final-cta h2 {
+      font-size: clamp(65px, 10vw, 140px);
+    }
+
+    .final-cta p:not(.eyebrow) {
+      margin: 22px auto 30px;
+
+      color: #69778c;
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 28px 5vw;
+
+      border-top: 1px solid #e9eef4;
+
+      color: #7b8798;
+
+      font-size: 12px;
+    }
+
+    /* =========================================================
+       SCROLL REVEAL
+       ========================================================= */
+
+    .reveal {
+      opacity: 0;
+
+      transform: translateY(30px);
+
+      transition:
+        opacity 0.75s ease,
+        transform 0.75s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+
+      transform: none;
+    }
+
+    /* =========================================================
+       RESPONSIVE — TABLET
+       ========================================================= */
+
+    @media (max-width: 900px) {
+      .site-header nav {
+        display: none;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+
+        padding: 70px 7vw;
+      }
+
+      .hero-visual {
+        height: 560px;
+      }
+
+      .phone {
+        transform: rotate(2deg) scale(0.9);
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .score-section {
+        grid-template-columns: 1fr;
+      }
+
+      .science-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .independence-card {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .vs {
+        padding: 18px;
+      }
+
+      .score-row {
+        grid-template-columns: 130px 1fr 30px;
+      }
+    }
+
+    /* =========================================================
+       RESPONSIVE — MOBILE
+       ========================================================= */
+
+    @media (max-width: 560px) {
+      .site-header {
+        padding: 0 5vw;
+      }
+
+      .brand {
+        font-size: 18px;
+      }
+
+      .hero {
+        padding: 55px 6vw;
+      }
+
+      .hero h1 {
+        font-size: 54px;
+      }
+
+      .hero-text {
+        font-size: 16px;
+      }
+
+      .hero-actions {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 17px;
+      }
+
+      .hero-visual {
+        height: 500px;
+      }
+
+      .phone {
+        width: 270px;
+        height: 530px;
+      }
+
+      .orbit-one {
+        width: 450px;
+        height: 450px;
+      }
+
+      .orbit-two {
+        width: 350px;
+        height: 350px;
+      }
+
+      .floating-card {
+        padding: 11px;
+
+        font-size: 9px;
+      }
+
+      .floating-card-left {
+        left: -2%;
+        top: 26%;
+      }
+
+      .floating-card-right {
+        right: -2%;
+        bottom: 23%;
+      }
+
+      .section-light,
+      .score-section,
+      .science,
+      .independence,
+      .final-cta {
+        padding: 85px 6vw;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .science-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-card {
+        min-height: 250px;
+      }
+
+      .big-score span {
+        font-size: 82px;
+      }
+
+      .score-panel {
+        padding: 28px 20px;
+      }
+
+      .score-row {
+        grid-template-columns: 1fr 42px;
+
+        gap: 7px;
+      }
+
+      .score-row > div {
+        grid-column: 1 / 2;
+      }
+
+      .score-row b {
+        grid-column: 2 / 3;
+        grid-row: 1;
+      }
+
+      .comparison {
+        padding-top: 85px;
+      }
+
+      .independence-card {
+        padding: 38px 30px;
+
+        gap: 35px;
+      }
+
+      footer {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+
+        padding: 24px 6vw;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-  <!-- ================= 1. YUKA-STYLE LANDING PAGE ================= -->
-  <div id="landing-page" class="landing-page view-active">
-    <nav class="landing-nav">
-      <div class="nav-brand">
-        <span class="logo-icon">⚡</span> NutriScan
-      </div>
-      <div class="nav-links">
-        <a href="#about">Application</a>
-        <a href="#independence">Independence</a>
-        <a href="#science">Science</a>
-      </div>
+  <!-- =======================================================
+       HEADER
+       ======================================================= -->
+
+  <header class="site-header" id="top">
+
+    <a href="#top" class="brand">
+      <span class="brand-mark">⚡</span>
+      <span>NutriScan</span>
+    </a>
+
+    <nav>
+      <a href="#application">Application</a>
+      <a href="#science">Science</a>
+      <a href="#independence">Independence</a>
     </nav>
 
-    <main class="hero-section">
-      <div class="hero-text">
-        <h1 class="hero-headline">Make the right choices for your body</h1>
-        <p class="hero-subhead">NutriScan deciphers energy drink and supplement labels to instantly reveal clinical dosing, heavy metal purity, and hidden proprietary blends.</p>
-        <div class="hero-ctas">
-          <button id="launch-app-btn" class="launch-btn">Launch Web Scanner ⚡</button>
+    <a href="#scanner" class="nav-cta">
+      Scan a Supplement ⚡
+    </a>
+
+  </header>
+
+
+  <main>
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="hero" id="application">
+
+      <div class="hero-copy reveal">
+
+        <p class="eyebrow">
+          THE SMARTER WAY TO READ SUPPLEMENTS
+        </p>
+
+        <h1>
+          Know what's really in your supplement.
+        </h1>
+
+        <p class="hero-text">
+          NutriScan deciphers supplement labels to reveal clinical dosing,
+          purity, hidden blends, and the quality of each ingredient.
+        </p>
+
+        <div class="hero-actions">
+
+          <a href="#scanner" class="button button-dark">
+            Scan a Supplement ⚡
+          </a>
+
+          <a href="#how-it-works" class="text-link">
+            See how it works ↓
+          </a>
+
         </div>
+
       </div>
 
-      <div class="hero-visual">
-        <div class="blob-bg"></div>
-        <div class="phone-mockup">
-          <div class="mockup-header">
-            <span>⚡ NutriScan</span>
-          </div>
-          <div class="mockup-body">
-            <div class="mockup-product">
-              <div class="mockup-img"></div>
+
+      <!-- PHONE MOCKUP -->
+
+      <div class="hero-visual reveal">
+
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+
+
+        <div class="phone" id="heroPhone">
+
+          <div class="phone-notch"></div>
+
+          <div class="phone-screen">
+
+            <div class="scan-top">
+              <span>NutriScan</span>
+              <span>•••</span>
+            </div>
+
+
+            <div class="product-label">
+
+              <span class="product-type">
+                SUPPLEMENT ANALYSIS
+              </span>
+
+              <h3>
+                Creatine<br />
+                Monohydrate
+              </h3>
+
+              <p>
+                5 g per serving
+              </p>
+
+            </div>
+
+
+            <div class="score-circle">
+
+              <strong>92</strong>
+
+              <small>/100</small>
+
+              <span>
+                Excellent
+              </span>
+
+            </div>
+
+
+            <div class="mini-results">
+
               <div>
-                <strong>Celsius Energy</strong>
-                <p>85/100 · Clean</p>
+                <span>Purity</span>
+                <b>96</b>
               </div>
+
+              <div>
+                <span>Clinical Efficacy</span>
+                <b>94</b>
+              </div>
+
+              <div>
+                <span>Transparency</span>
+                <b>90</b>
+              </div>
+
+              <div>
+                <span>Form</span>
+                <b>95</b>
+              </div>
+
             </div>
-            <div class="mockup-list">
-              <div class="mockup-item">Clinical Caffeine <span class="dot green"></span></div>
-              <div class="mockup-item">No Sugar/Carbs <span class="dot green"></span></div>
-              <div class="mockup-item">Sucralose Added <span class="dot yellow"></span></div>
-            </div>
+
           </div>
+
         </div>
+
+
+        <!-- FLOATING RESULT CARD -->
+
+        <div class="floating-card floating-card-left">
+
+          <span class="check">
+            ✓
+          </span>
+
+          <div>
+            <b>Clinical dose</b>
+            <small>Evidence supported</small>
+          </div>
+
+        </div>
+
+
+        <div class="floating-card floating-card-right">
+
+          <span class="shield">
+            ◇
+          </span>
+
+          <div>
+            <b>Transparent label</b>
+            <small>No hidden blend</small>
+          </div>
+
+        </div>
+
       </div>
-    </main>
-  </div>
 
-  <!-- ================= 2. DASHBOARD SCANNER APP ================= -->
-  <div id="app-wrapper" class="app-wrapper view-hidden">
-    <div class="app-container">
-      <header class="app-header">
-        <button id="back-btn" class="back-btn">← Home</button>
-        <div class="logo">
-          <span class="logo-icon">⚡</span>
-          <h1>NutriScan</h1>
-        </div>
-        <p class="tagline">Purity & Efficacy Rating Engine</p>
-      </header>
+    </section>
 
-      <main>
-        <!-- Search & Scan Panel -->
-        <section class="card search-card">
-          <h2>Scan or Enter Barcode</h2>
-          
-          <button id="camera-toggle-btn" type="button" class="btn-secondary">
-            📷 Open Camera Scanner
-          </button>
-          
-          <div id="reader-container" class="scanner-wrapper hidden">
-            <div id="reader"></div>
+
+    <!-- =====================================================
+         FOUR ANSWERS
+         ===================================================== -->
+
+    <section
+      class="intro section-light"
+      id="how-it-works"
+    >
+
+      <div class="section-heading reveal">
+
+        <p class="eyebrow">
+          ONE SCAN. FOUR ANSWERS.
+        </p>
+
+        <h2>
+          Everything you need to understand the label.
+        </h2>
+
+      </div>
+
+
+      <div class="feature-grid">
+
+
+        <!-- CARD 1 -->
+
+        <article class="feature-card reveal">
+
+          <span class="feature-number">
+            01
+          </span>
+
+          <div class="feature-icon">
+            ◈
           </div>
 
-          <form id="search-form">
-            <div class="input-group">
-              <input type="text" id="barcode-input" placeholder="e.g. 0850004202021" required>
-              <button type="submit" id="search-btn">Analyze</button>
-            </div>
-          </form>
-          
-          <div class="demo-barcodes">
-            <p>Quick Demo Scans:</p>
-            <div class="chip-group">
-              <button class="chip" data-upc="0850004202021">Celsius Energy</button>
-              <button class="chip" data-upc="5060337502254">Grenade Protein Bar</button>
-              <button class="chip" data-upc="0074817060207">Optimum Gold Whey</button>
-            </div>
+          <h3>
+            Ingredient Quality
+          </h3>
+
+          <p>
+            See purity signals, independent testing, certifications,
+            fillers, and potential contamination concerns.
+          </p>
+
+        </article>
+
+
+        <!-- CARD 2 -->
+
+        <article class="feature-card reveal">
+
+          <span class="feature-number">
+            02
+          </span>
+
+          <div class="feature-icon">
+            ✦
           </div>
-        </section>
 
-        <!-- Status Messages -->
-        <div id="loader" class="loader hidden">
-          <div class="spinner"></div>
-          <p>Fetching Open Food Facts Data & Calculating Score...</p>
+          <h3>
+            Clinical Efficacy
+          </h3>
+
+          <p>
+            Compare the labeled amount of an ingredient with
+            evidence-backed effective dosing.
+          </p>
+
+        </article>
+
+
+        <!-- CARD 3 -->
+
+        <article class="feature-card reveal">
+
+          <span class="feature-number">
+            03
+          </span>
+
+          <div class="feature-icon">
+            ☰
+          </div>
+
+          <h3>
+            Label Transparency
+          </h3>
+
+          <p>
+            Identify proprietary blends and reward products that
+            disclose exactly what is inside.
+          </p>
+
+        </article>
+
+
+        <!-- CARD 4 -->
+
+        <article class="feature-card reveal">
+
+          <span class="feature-number">
+            04
+          </span>
+
+          <div class="feature-icon">
+            ↗
+          </div>
+
+          <h3>
+            Form &amp; Bioavailability
+          </h3>
+
+          <p>
+            Understand whether the specific compound or ingredient
+            form is a strong choice for its intended use.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCORE
+         ===================================================== -->
+
+    <section class="score-section" id="scanner">
+
+      <div class="score-copy reveal">
+
+        <p class="eyebrow">
+          THE NUTRISCAN SCORE
+        </p>
+
+        <h2>
+          No mystery. Just a score you can understand.
+        </h2>
+
+        <p>
+          Instead of a black-box rating, NutriScan shows exactly
+          what is driving a product's score and where it falls short.
+        </p>
+
+        <a
+          href="#comparison"
+          class="button button-yellow"
+        >
+          Explore a sample score
+        </a>
+
+      </div>
+
+
+      <div class="score-panel reveal">
+
+        <div class="big-score">
+
+          <span>
+            92
+          </span>
+
+          <small>
+            /100
+          </small>
+
+          <b>
+            Excellent choice
+          </b>
+
         </div>
-        <div id="error-message" class="error-banner hidden"></div>
 
-        <!-- Rating Results Dashboard -->
-        <div id="results-dashboard" class="hidden">
-          <section class="card score-card">
-            <div class="product-meta">
-              <img id="product-img" src="" alt="Product Image" class="product-thumb">
-              <div>
-                <h2 id="product-title">Product Name</h2>
-                <p id="product-brand" class="brand-name">Brand Name</p>
-              </div>
+
+        <div class="score-bars">
+
+
+          <div class="score-row">
+
+            <span>
+              Ingredient Quality
+            </span>
+
+            <div>
+              <i data-width="96%"></i>
             </div>
 
-            <div class="score-display">
-              <div id="score-badge" class="score-circle">
-                <span id="score-value">0</span>
-                <span class="score-max">/100</span>
-              </div>
-              <div class="score-verdict">
-                <h3 id="verdict-label">Assessment</h3>
-                <p id="verdict-desc">Analyzing ingredient efficacy and purity...</p>
-              </div>
-            </div>
-          </section>
+            <b>
+              96
+            </b>
 
-          <section class="card">
-            <h3>Score Breakdown</h3>
-            <div class="metrics-grid">
-              <div class="metric-item">
-                <span class="metric-label">Clinical Dosage</span>
-                <div class="progress-bar"><div id="bar-dosage" class="fill"></div></div>
-                <span id="val-dosage" class="metric-val">0%</span>
-              </div>
-              <div class="metric-item">
-                <span class="metric-label">Ingredient Purity</span>
-                <div class="progress-bar"><div id="bar-purity" class="fill"></div></div>
-                <span id="val-purity" class="metric-val">0%</span>
-              </div>
-              <div class="metric-item">
-                <span class="metric-label">Label Transparency</span>
-                <div class="progress-bar"><div id="bar-transparency" class="fill"></div></div>
-                <span id="val-transparency" class="metric-val">0%</span>
-              </div>
-            </div>
-          </section>
+          </div>
 
-          <section class="card">
-            <h3>Ingredient Analysis & Flags</h3>
-            <ul id="findings-list" class="findings-list"></ul>
-          </section>
 
-          <section id="alt-card" class="card alt-card hidden">
-            <div class="alt-header">
-              <span>✨ Cleaner Alternative</span>
+          <div class="score-row">
+
+            <span>
+              Clinical Efficacy
+            </span>
+
+            <div>
+              <i data-width="94%"></i>
             </div>
-            <div class="alt-body">
-              <h4 id="alt-title">Alternative Product</h4>
-              <p id="alt-desc">Higher protein purity per serving with zero artificial sweeteners.</p>
+
+            <b>
+              94
+            </b>
+
+          </div>
+
+
+          <div class="score-row">
+
+            <span>
+              Transparency
+            </span>
+
+            <div>
+              <i data-width="90%"></i>
             </div>
-          </section>
+
+            <b>
+              90
+            </b>
+
+          </div>
+
+
+          <div class="score-row">
+
+            <span>
+              Form &amp; Bioavailability
+            </span>
+
+            <div>
+              <i data-width="95%"></i>
+            </div>
+
+            <b>
+              95
+            </b>
+
+          </div>
+
+
         </div>
-      </main>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRODUCT COMPARISON
+         ===================================================== -->
+
+    <section
+      class="comparison section-light"
+      id="comparison"
+    >
+
+      <div class="section-heading centered reveal">
+
+        <p class="eyebrow">
+          COMPARE BEFORE YOU BUY
+        </p>
+
+        <h2>
+          Two products can look similar.
+          Their labels can tell a different story.
+        </h2>
+
+      </div>
+
+
+      <div class="comparison-cards reveal">
+
+
+        <!-- PRODUCT A -->
+
+        <div class="product-card">
+
+          <span class="pill">
+            PRODUCT A
+          </span>
+
+          <h3>
+            Creatine Blend
+          </h3>
+
+          <div class="product-score score-mid">
+            78
+          </div>
+
+          <p>
+            Proprietary blend makes individual doses unclear.
+          </p>
+
+          <ul>
+            <li>
+              ⚠ Hidden ingredient amounts
+            </li>
+
+            <li>
+              ✓ Strong ingredient forms
+            </li>
+
+            <li>
+              ⚠ Limited testing evidence
+            </li>
+          </ul>
+
+        </div>
+
+
+        <div class="vs">
+          VS
+        </div>
+
+
+        <!-- PRODUCT B -->
+
+        <div class="product-card recommended">
+
+          <span class="pill">
+            PRODUCT B · RECOMMENDED
+          </span>
+
+          <h3>
+            Creatine Monohydrate
+          </h3>
+
+          <div class="product-score">
+            92
+          </div>
+
+          <p>
+            Fully disclosed formula with an evidence-supported dose.
+          </p>
+
+          <ul>
+            <li>
+              ✓ Fully transparent label
+            </li>
+
+            <li>
+              ✓ Clinical dose
+            </li>
+
+            <li>
+              ✓ Strong purity signals
+            </li>
+          </ul>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCIENCE
+         ===================================================== -->
+
+    <section class="science" id="science">
+
+      <div class="science-inner">
+
+
+        <div class="science-copy reveal">
+
+          <p class="eyebrow">
+            BUILT ON EVIDENCE. NOT HYPE.
+          </p>
+
+          <h2>
+            Science should be visible in the score.
+          </h2>
+
+          <p style="margin-top: 25px;">
+            NutriScan is designed around clinical evidence,
+            label analysis, ingredient research, and independent
+            quality signals — not marketing claims.
+          </p>
+
+        </div>
+
+
+        <div class="science-grid">
+
+
+          <div class="science-item reveal">
+
+            <strong>
+              01
+            </strong>
+
+            <span>
+              Clinical research
+            </span>
+
+          </div>
+
+
+          <div class="science-item reveal">
+
+            <strong>
+              02
+            </strong>
+
+            <span>
+              Ingredient databases
+            </span>
+
+          </div>
+
+
+          <div class="science-item reveal">
+
+            <strong>
+              03
+            </strong>
+
+            <span>
+              Independent testing
+            </span>
+
+          </div>
+
+
+          <div class="science-item reveal">
+
+            <strong>
+              04
+            </strong>
+
+            <span>
+              Certification signals
+            </span>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         INDEPENDENCE
+         ===================================================== -->
+
+    <section
+      class="independence"
+      id="independence"
+    >
+
+      <div class="independence-card reveal">
+
+        <div>
+
+          <p class="eyebrow">
+            INDEPENDENCE
+          </p>
+
+          <h2>
+            Your score isn't for sale.
+          </h2>
+
+        </div>
+
+
+        <p>
+          NutriScan's goal is simple: make supplement information
+          easier to understand. Products should earn their score
+          through evidence and transparency.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FINAL CTA
+         ===================================================== -->
+
+    <section class="final-cta">
+
+      <div class="reveal">
+
+        <p class="eyebrow">
+          BEFORE YOU TAKE IT
+        </p>
+
+        <h2>
+          NutriScan it.
+        </h2>
+
+        <p>
+          Turn a complicated label into a decision you can understand.
+        </p>
+
+        <a
+          href="#scanner"
+          class="button button-dark"
+        >
+          Launch Web Scanner ⚡
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =======================================================
+       FOOTER
+       ======================================================= -->
+
+  <footer>
+
+    <div class="brand">
+
+      <span class="brand-mark">
+        ⚡
+      </span>
+
+      <span>
+        NutriScan
+      </span>
+
     </div>
-  </div>
 
-  <script src="app.js"></script>
+    <span>
+      © 2026 NutriScan
+    </span>
+
+  </footer>
+
+
+  <!-- =======================================================
+       JAVASCRIPT
+       Everything is included directly in this HTML file.
+       ======================================================= -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      /* =====================================================
+         SCROLL REVEAL
+         ===================================================== */
+
+      var revealItems = document.querySelectorAll(".reveal");
+
+      if ("IntersectionObserver" in window) {
+
+        var revealObserver = new IntersectionObserver(
+          function (entries, observer) {
+
+            entries.forEach(function (entry) {
+
+              if (entry.isIntersecting) {
+
+                entry.target.classList.add("visible");
+
+                observer.unobserve(entry.target);
+
+              }
+
+            });
+
+          },
+          {
+            threshold: 0.12
+          }
+        );
+
+        revealItems.forEach(function (item) {
+
+          revealObserver.observe(item);
+
+        });
+
+      } else {
+
+        revealItems.forEach(function (item) {
+
+          item.classList.add("visible");
+
+        });
+
+      }
+
+
+      /* =====================================================
+         HEADER SCROLL EFFECT
+         ===================================================== */
+
+      var header = document.querySelector(".site-header");
+
+      function updateHeader() {
+
+        if (!header) {
+          return;
+        }
+
+        if (window.scrollY > 40) {
+
+          header.classList.add("scrolled");
+
+        } else {
+
+          header.classList.remove("scrolled");
+
+        }
+
+      }
+
+      window.addEventListener(
+        "scroll",
+        updateHeader,
+        {
+          passive: true
+        }
+      );
+
+      updateHeader();
+
+
+      /* =====================================================
+         HERO PHONE SCROLL MOVEMENT
+         ===================================================== */
+
+      var heroVisual = document.querySelector(".hero-visual");
+
+      var phone = document.querySelector("#heroPhone");
+
+
+      function updatePhone() {
+
+        if (
+          !heroVisual ||
+          !phone ||
+          window.innerWidth < 700
+        ) {
+          return;
+        }
+
+        var rect =
+          heroVisual.getBoundingClientRect();
+
+        var progress =
+          (
+            window.innerHeight / 2 -
+            rect.top
+          ) /
+          window.innerHeight;
+
+        progress =
+          Math.max(
+            -1,
+            Math.min(1, progress)
+          );
+
+        var rotation =
+          4 +
+          progress * 3;
+
+        var y =
+          progress * -22;
+
+        phone.style.transform =
+          "translateY(" +
+          y +
+          "px) rotate(" +
+          rotation +
+          "deg)";
+
+      }
+
+
+      window.addEventListener(
+        "scroll",
+        updatePhone,
+        {
+          passive: true
+        }
+      );
+
+      window.addEventListener(
+        "resize",
+        updatePhone
+      );
+
+      updatePhone();
+
+
+      /* =====================================================
+         SCORE BAR ANIMATION
+         ===================================================== */
+
+      var scorePanel =
+        document.querySelector(".score-panel");
+
+      var bars =
+        document.querySelectorAll(
+          ".score-row i"
+        );
+
+
+      function animateBars() {
+
+        bars.forEach(function (bar) {
+
+          var finalWidth =
+            bar.getAttribute(
+              "data-width"
+            );
+
+          bar.style.width = "0%";
+
+          setTimeout(
+            function () {
+
+              bar.style.width =
+                finalWidth;
+
+            },
+            100
+          );
+
+        });
+
+      }
+
+
+      if (
+        scorePanel &&
+        bars.length &&
+        "IntersectionObserver" in window
+      ) {
+
+        var barObserver =
+          new IntersectionObserver(
+            function (entries, observer) {
+
+              if (
+                entries[0].isIntersecting
+              ) {
+
+                animateBars();
+
+                observer.disconnect();
+
+              }
+
+            },
+            {
+              threshold: 0.25
+            }
+          );
+
+        barObserver.observe(
+          scorePanel
+        );
+
+      } else if (bars.length) {
+
+        animateBars();
+
+      }
+
+
+      /* =====================================================
+         SMOOTH ANCHOR NAVIGATION
+         ===================================================== */
+
+      var links =
+        document.querySelectorAll(
+          'a[href^="#"]'
+        );
+
+      links.forEach(function (link) {
+
+        link.addEventListener(
+          "click",
+          function (event) {
+
+            var targetId =
+              link.getAttribute("href");
+
+            if (
+              !targetId ||
+              targetId === "#"
+            ) {
+              return;
+            }
+
+            var target =
+              document.querySelector(
+                targetId
+              );
+
+            if (!target) {
+              return;
+            }
+
+            event.preventDefault();
+
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+
+          }
+        );
+
+      });
+
+    });
+  </script>
+
 </body>
 </html>
