@@ -18,7 +18,8 @@
   --landing-blob: #e0f2fe;
   --yuka-green: #22c55e;
 }
-
+html {
+      scroll-behavior: smooth;
 * {
   box-sizing: border-box;
   margin: 0;
